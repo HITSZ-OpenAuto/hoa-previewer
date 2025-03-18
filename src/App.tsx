@@ -11,6 +11,8 @@ import { Document, Page } from "react-pdf";
 import { extractFileName } from "./utils/file";
 import { pdfjs } from "react-pdf";
 
+import Tabbar from "./components/tabbar";
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface PDFProps {
@@ -29,7 +31,7 @@ function PDFComponent(props: PDFProps) {
       <Document
         file={props.file}
         onLoadSuccess={onDocumentLoadSuccess}
-        className="h-full scale-105 mt-8 overflow-auto"
+        className="h-full scale-105 mt-8"
       >
         {Array.from(new Array(numPages), (_el, index) => (
           <Page
@@ -50,7 +52,7 @@ interface MarkdownProps {
 function MarkdownComponent(props: MarkdownProps) {
   return (
     <MarkdownPreview
-      className="h-full overflow-auto mt-8"
+      className="h-full mt-8"
       source={props.source}
       style={{ padding: 16 }}
       components={{
@@ -118,13 +120,13 @@ function App() {
   const renderComponent = useMemo(() => {
     if (extension === "md") {
       return (
-        <div className="w-1/2 flex justify-center items-center h-full overflow-y-auto">
+        <div className="w-1/2 flex justify-center items-center h-full mt-18">
           <MarkdownComponent source={file} />
         </div>
       );
     } else if (extension === "pdf") {
       return (
-        <div className="w-1/2 flex justify-center items-center h-full">
+        <div className="w-1/2 flex justify-center items-center h-full mt-18">
           <PDFComponent file={file} />
         </div>
       );
@@ -133,6 +135,12 @@ function App() {
         <DocViewer
           documents={[{ uri: file }]}
           pluginRenderers={DocViewerRenderers}
+          config={{
+            header: {
+              disableHeader: true,
+            },
+          }}
+          className="mt-18"
         />
       );
     }
@@ -140,7 +148,8 @@ function App() {
 
   return useMemo(
     () => (
-      <div className="w-screen h-screen relative flex items-center justify-center">
+      <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto">
+        <Tabbar />
         {renderComponent}
       </div>
     ),
