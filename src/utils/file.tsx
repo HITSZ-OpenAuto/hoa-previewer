@@ -4,9 +4,14 @@ export const extractFileName = () => {
   fileURL = fileURL ? fileURL : "";
   const { isValid, extension } = validateFileName(fileURL);
   if (isValid) {
-    return { extension: extension, fileURL: fileURL };
+    const fileTitle = fileURL.split("/").pop();
+    return {
+      extension: extension,
+      fileURL: fileURL,
+      fileTitle: fileTitle ? fileTitle : "",
+    };
   }
-  return { extension: null, fileURL: "" };
+  return { extension: null, fileURL: "", fileTitle: "" };
 };
 
 const validateFileName = (fileName: string) => {

@@ -103,7 +103,7 @@ function App() {
     return extractFileName();
   }, []);
 
-  const { extension, fileURL } = getFileName();
+  const { extension, fileURL, fileTitle } = getFileName();
 
   useEffect(() => {
     if (extension === "md") {
@@ -149,11 +149,11 @@ function App() {
   return useMemo(
     () => (
       <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto">
-        <Tabbar />
+        <Tabbar fileTitle={fileTitle} />
         {renderComponent}
       </div>
     ),
-    [renderComponent]
+    [renderComponent, fileTitle]
   );
 }
 
