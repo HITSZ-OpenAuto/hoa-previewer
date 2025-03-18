@@ -16,7 +16,7 @@ export const extractFileName = () => {
 
 const validateFileName = (fileName: string) => {
   const pattern =
-    /^https:\/\/gh\.hoa\.moe\/github\.com\/HITSZ-OpenAuto\/.*\.(docx|pdf|png|pptx|jpg|jpeg|xlsx|txt|md)$/;
+    /^https:\/\/gh\.hoa\.moe\/github\.com\/HITSZ-OpenAuto\/.*\.(doc|docx|pdf|png|pptx|jpg|jpeg|xlsx|txt|md)$/;
 
   const fileNameRegex = pattern; // Using your defined pattern
 
