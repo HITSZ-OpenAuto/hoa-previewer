@@ -27,17 +27,17 @@ function PDFComponent(props: PDFProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-start justify-start md:items-center md:justify-center h-full w-full">
       <Document
         file={props.file}
         onLoadSuccess={onDocumentLoadSuccess}
-        className="h-full scale-105 mt-8"
+        className="h-full w-full origin-top-left scale-51 md:origin-center md:scale-105 mt-8 top-0"
       >
         {Array.from(new Array(numPages), (_el, index) => (
           <Page
             key={`page_${index + 1}`}
             pageNumber={index + 1}
-            className="h-full shadow-md border-1 my-4 border-gray-300"
+            className="h-full w-full shadow-md border-1 my-4 border-gray-300"
           />
         ))}
       </Document>
@@ -126,7 +126,7 @@ function App() {
       );
     } else if (extension === "pdf") {
       return (
-        <div className="w-1/2 flex justify-center items-center h-full mt-18">
+        <div className="w-full md:w-1/2 flex justify-center items-center h-full mt-4 md:mt-18">
           <PDFComponent file={file} />
         </div>
       );
@@ -148,7 +148,7 @@ function App() {
 
   return useMemo(
     () => (
-      <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto">
+      <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden">
         <Tabbar fileTitle={fileTitle} />
         {renderComponent}
       </div>
