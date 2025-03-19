@@ -37,7 +37,7 @@ function App() {
       );
     } else if (extension === "pdf") {
       return (
-        <div className="w-1/2 flex justify-center items-center h-full mt-18">
+        <div className="w-full md:w-1/2 flex justify-center items-center h-full mt-4 md:mt-18">
           <PDFComponent file={file} />
         </div>
       );
@@ -48,7 +48,7 @@ function App() {
 
   return useMemo(
     () => (
-      <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto">
+      <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden">
         <Tabbar fileTitle={fileTitle} />
         {renderComponent}
       </div>
