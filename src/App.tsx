@@ -31,7 +31,7 @@ function App() {
   const renderComponent = useMemo(() => {
     if (extension === "md") {
       return (
-        <div className="w-1/2 flex justify-center items-center h-full mt-18">
+        <div className="w-full md:w-1/2 px-4 flex justify-center items-center h-full mt-18">
           <MarkdownComponent source={file} />
         </div>
       );
@@ -41,8 +41,19 @@ function App() {
           <PDFComponent file={file} />
         </div>
       );
-    } else {
+    } else if (extension !== null) {
       return <DocComponent fileURL={file} />;
+    } else {
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center gap-4 mb-8">
+          <div className="text-4xl font-bold text-gray-500">
+            这里什么也没有哦～
+          </div>
+          <div className="text-lg font-bold text-gray-500">
+            返回主站去查看文档吧!
+          </div>
+        </div>
+      );
     }
   }, [file, extension]);
 
