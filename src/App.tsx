@@ -1,101 +1,12 @@
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
-import "@cyntler/react-doc-viewer/dist/index.css";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-import MarkdownPreview from "@uiw/react-markdown-preview";
-import { getCodeString } from "rehype-rewrite";
-import katex from "katex";
-import "katex/dist/katex.css";
+import React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Document, Page } from "react-pdf";
 import { extractFileName } from "./utils/file";
-import { pdfjs } from "react-pdf";
 
 import Tabbar from "./components/tabbar";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-
-interface PDFProps {
-  file: string;
-}
-
-function PDFComponent(props: PDFProps) {
-  const [numPages, setNumPages] = useState<number>();
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
-
-  return (
-    <div className="flex flex-col items-start justify-start md:items-center md:justify-center h-full w-full">
-      <Document
-        file={props.file}
-        onLoadSuccess={onDocumentLoadSuccess}
-        className="h-full w-full origin-top-left scale-51 md:origin-center md:scale-105 mt-8 top-0"
-      >
-        {Array.from(new Array(numPages), (_el, index) => (
-          <Page
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            className="h-full w-full shadow-md border-1 my-4 border-gray-300"
-          />
-        ))}
-      </Document>
-    </div>
-  );
-}
-
-interface MarkdownProps {
-  source: string;
-}
-
-function MarkdownComponent(props: MarkdownProps) {
-  return (
-    <MarkdownPreview
-      className="h-full mt-8"
-      source={props.source}
-      style={{ padding: 16 }}
-      components={{
-        code: ({ children = [], className, ...props }) => {
-          if (typeof children === "string" && /^\$\$(.*)\$\$/.test(children)) {
-            const html = katex.renderToString(
-              children.replace(/^\$\$(.*)\$\$/, "$1"),
-              {
-                throwOnError: false,
-              }
-            );
-            return (
-              <code
-                dangerouslySetInnerHTML={{ __html: html }}
-                style={{ background: "transparent" }}
-              />
-            );
-          }
-          const code =
-            props.node && props.node.children
-              ? getCodeString(props.node.children)
-              : children;
-          if (
-            typeof code === "string" &&
-            typeof className === "string" &&
-            /^language-katex/.test(className.toLocaleLowerCase())
-          ) {
-            const html = katex.renderToString(code, {
-              throwOnError: false,
-            });
-            return (
-              <code
-                style={{ fontSize: "150%" }}
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
-            );
-          }
-          return <code className={String(className)}>{children}</code>;
-        },
-      }}
-    />
-  );
-}
+const PDFComponent = React.lazy(() => import("./components/pdf"));
+const MarkdownComponent = React.lazy(() => import("./components/md"));
+const DocComponent = React.lazy(() => import("./components/doc"));
 
 function App() {
   const [file, setFile] = useState("");
@@ -131,18 +42,7 @@ function App() {
         </div>
       );
     } else {
-      return (
-        <DocViewer
-          documents={[{ uri: file }]}
-          pluginRenderers={DocViewerRenderers}
-          config={{
-            header: {
-              disableHeader: true,
-            },
-          }}
-          className="mt-18"
-        />
-      );
+      return <DocComponent fileURL={file} />;
     }
   }, [file, extension]);
 
