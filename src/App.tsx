@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { extractFileName } from "./utils/file";
 
 import Tabbar from "./components/tabbar";
+import { ThemeContext } from "./contexts/themeContext";
 
 const PDFComponent = React.lazy(() => import("./components/pdf"));
 const MarkdownComponent = React.lazy(() => import("./components/md"));
@@ -13,6 +14,18 @@ function App() {
   const getFileName = useCallback(() => {
     return extractFileName();
   }, []);
+
+  const [dark, setDark] = useState(
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? true : false
+  );
+
+  useEffect(() => {
+    if (dark) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [dark]);
 
   const { extension, fileURL, fileTitle } = getFileName();
 
@@ -59,12 +72,14 @@ function App() {
 
   return useMemo(
     () => (
-      <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden">
-        <Tabbar fileTitle={fileTitle} />
-        {renderComponent}
-      </div>
+      <ThemeContext.Provider value={{ dark }}>
+        <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden dark:bg-slate-950/80">
+          <Tabbar fileTitle={fileTitle} />
+          {renderComponent}
+        </div>
+      </ThemeContext.Provider>
     ),
-    [renderComponent, fileTitle]
+    [renderComponent, fileTitle, dark]
   );
 }
 
