@@ -25,22 +25,22 @@ export default function PDFComponent(props: PDFProps) {
   }
 
   return (
-    <div className="flex flex-col items-start justify-start md:items-center md:justify-center h-full max-w-11/12 min-w-11/12">
-      <Document
-        file={props.file}
-        onLoadSuccess={onDocumentLoadSuccess}
-        className="h-full origin-top-left scale-51 md:origin-center md:scale-105 mt-8 top-0"
-      >
-        {Array.from(new Array(numPages), (_el, index) => (
-          <Page
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            scale={1}
-            width={width >= 768 ? 744 : width * 1.8}
-            className="h-full shadow-md border-1 my-4 border-gray-300"
-          />
-        ))}
-      </Document>
-    </div>
+    // <div className="flex flex-col items-start justify-start md:items-center md:justify-center h-full w-max">
+    <Document
+      file={props.file}
+      onLoadSuccess={onDocumentLoadSuccess}
+      className=""
+    >
+      {Array.from(new Array(numPages), (_el, index) => (
+        <Page
+          key={`page_${index + 1}`}
+          pageNumber={index + 1}
+          scale={1}
+          width={width >= 768 ? 781.2 : width}
+          className="shadow-md border-1 my-4 border-gray-300"
+        />
+      ))}
+    </Document>
+    // </div>
   );
 }
