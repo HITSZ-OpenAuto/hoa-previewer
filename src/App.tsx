@@ -4,6 +4,7 @@ import { extractFileName } from "./utils/file";
 
 import Tabbar from "./components/tabbar";
 import { ThemeContext } from "./contexts/themeContext";
+import { DownloadButton } from "./components/download.tsx";
 
 const PDFComponent = React.lazy(() => import("./components/pdf"));
 const MarkdownComponent = React.lazy(() => import("./components/md"));
@@ -85,6 +86,7 @@ function App() {
           <Tabbar fileTitle={fileTitle} />
           <div className="overflow-y-hidden w-full h-full flex items-end justify-center">
             {renderComponent}
+            <DownloadButton />
           </div>
         </div>
       </ThemeContext.Provider>
