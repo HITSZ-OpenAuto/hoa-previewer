@@ -53,7 +53,7 @@ function App() {
       );
     } else if (extension === "pdf") {
       return (
-        <div className="w-full md:w-1/2 md:min-w-[781px] h-full pt-26 flex flex-col items-end overflow-hidden">
+        <div className="w-full md:w-1/2 md:min-w-[781px] h-full pt-26 flex flex-col items-center overflow-hidden">
           <div className="overflow-y-auto">
             <PDFComponent file={file} />
           </div>
