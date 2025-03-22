@@ -47,6 +47,7 @@ async function downloadFile(
 export function DownloadButton() {
   const [progress, setProgress] = useState<number>(0);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [bounce, setBounce] = useState<boolean>(false);
 
   const getFileName = useCallback(() => {
     return extractFileName();
@@ -59,8 +60,14 @@ export function DownloadButton() {
     setIsDownloading(true);
     downloadFile(fileURL, setProgress)
       .then(() => {
-        setIsDownloading(false);
-        setProgress(0);
+        setTimeout(() => {
+          setBounce(true);
+          setTimeout(() => {
+            setBounce(false);
+            setIsDownloading(false);
+            setProgress(0);
+          }, 2000);
+        }, 500);
       })
       .catch();
   }, [fileURL]);
@@ -95,9 +102,13 @@ export function DownloadButton() {
   return useMemo(
     () => (
       <div
-        className="fixed right-2 bottom-2 md:right-auto md:bottom-auto md:relative h-10 w-10 md:ml-6 md:mb-8 rounded-full shadow-sm shadow-gray-50 cursor-pointer flex items-center justify-center bg-slate-800/80 dark:bg-gray-100/80"
+        className={`fixed z-999 md:relative right-2 bottom-2 md:right-auto md:bottom-auto h-10 w-10 md:ml-6 md:mb-8 rounded-full shadow-sm shadow-gray-50 cursor-pointer flex items-center justify-center bg-slate-800/80 dark:bg-gray-100/80
+           ${bounce ? "animate-bounce" : "-translate-y-1/4"}`}
         onClick={onDownload}
       >
+        {!isDownloading && (
+          <div className="absolute -z-10 top-0 left-0 w-full h-full rounded-full animate-ping bg-inherit"></div>
+        )}
         <div
           className="absolute top-0 left-0 w-full h-full rounded-full bg-conic from-slate-100 via-slate-100 to-transparent"
           style={
@@ -111,6 +122,6 @@ export function DownloadButton() {
         {innerContent}
       </div>
     ),
-    [innerContent, onDownload, progress],
+    [bounce, innerContent, isDownloading, onDownload, progress],
   );
 }
