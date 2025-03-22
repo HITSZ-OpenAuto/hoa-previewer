@@ -4,6 +4,7 @@ import { extractFileName } from "./utils/file";
 
 import Tabbar from "./components/tabbar";
 import { ThemeContext } from "./contexts/themeContext";
+import { DownloadButton } from "./components/download.tsx";
 
 const PDFComponent = React.lazy(() => import("./components/pdf"));
 const MarkdownComponent = React.lazy(() => import("./components/md"));
@@ -15,8 +16,8 @@ function App() {
     return extractFileName();
   }, []);
 
-  const [dark, setDark] = useState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? true : false
+  const [dark] = useState(
+    window.matchMedia("(prefers-color-scheme: dark)").matches,
   );
 
   useEffect(() => {
@@ -44,18 +45,26 @@ function App() {
   const renderComponent = useMemo(() => {
     if (extension === "md") {
       return (
-        <div className="w-full md:w-1/2 px-4 flex justify-center items-center h-full mt-18">
-          <MarkdownComponent source={file} />
+        <div className="w-full md:w-1/2 h-full pt-18 flex overflow-hidden">
+          <div className="overflow-y-auto">
+            <MarkdownComponent source={file} />
+          </div>
         </div>
       );
     } else if (extension === "pdf") {
       return (
-        <div className="w-full md:w-1/2 flex justify-center items-center h-full mt-4 md:mt-18">
-          <PDFComponent file={file} />
+        <div className="w-full md:w-1/2 md:min-w-[781px] h-full pt-26 flex flex-col items-end overflow-hidden">
+          <div className="overflow-y-auto">
+            <PDFComponent file={file} />
+          </div>
         </div>
       );
     } else if (extension !== null) {
-      return <DocComponent fileURL={file} />;
+      return (
+        <div className="w-full md:w-1/2 md:min-w-[800px] h-full">
+          <DocComponent fileURL={file} />
+        </div>
+      );
     } else {
       return (
         <div className="w-full h-full flex flex-col items-center justify-center gap-4 mb-8">
@@ -73,13 +82,16 @@ function App() {
   return useMemo(
     () => (
       <ThemeContext.Provider value={{ dark }}>
-        <div className="w-screen h-screen relative flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden dark:bg-slate-950/80">
+        <div className="w-screen h-screen relative overflow-hidden dark:bg-slate-950/80">
           <Tabbar fileTitle={fileTitle} />
-          {renderComponent}
+          <div className="overflow-y-hidden w-full h-full flex items-end justify-center">
+            {renderComponent}
+            <DownloadButton />
+          </div>
         </div>
       </ThemeContext.Provider>
     ),
-    [renderComponent, fileTitle, dark]
+    [renderComponent, fileTitle, dark],
   );
 }
 

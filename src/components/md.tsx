@@ -32,7 +32,7 @@ export default function MarkdownComponent(props: MarkdownProps) {
     if (/^\$\$(.*)\$\$/.test(content)) {
       const html = katexInstance.renderToString(
         content.replace(/^\$\$(.*)\$\$/, "$1"),
-        { throwOnError: false }
+        { throwOnError: false },
       );
       return (
         <code
@@ -46,7 +46,7 @@ export default function MarkdownComponent(props: MarkdownProps) {
 
   return (
     <MarkdownPreview
-      className="h-full mt-8"
+      className="h-full"
       source={props.source}
       style={{ padding: 16 }}
       components={{
