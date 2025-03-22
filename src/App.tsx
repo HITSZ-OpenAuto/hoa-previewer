@@ -86,12 +86,12 @@ function App() {
           <Tabbar fileTitle={fileTitle} />
           <div className="overflow-y-hidden w-full h-full flex items-end justify-center">
             {renderComponent}
-            <DownloadButton />
+            {extension && <DownloadButton />}
           </div>
         </div>
       </ThemeContext.Provider>
     ),
-    [renderComponent, fileTitle, dark],
+    [dark, fileTitle, renderComponent, extension],
   );
 }
 

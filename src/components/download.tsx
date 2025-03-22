@@ -75,7 +75,7 @@ export function DownloadButton() {
   const downloadIcon = useMemo(
     () => (
       <svg
-        className="w-7 h-7 fill-gray-100/80 dark:fill-slate-800/80"
+        className="w-7 h-7 fill-[#1890FF] group-hover:fill-gray-50"
         viewBox="0 0 1024 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ export function DownloadButton() {
   const innerContent = useMemo(
     () =>
       isDownloading ? (
-        <span className="text-xs text-gray-100/80 dark:text-slate-800/80">
+        <span className="text-xs text-[#1890FF] group-hover:text-gray-50">
           {progress.toFixed(0)}%
         </span>
       ) : (
@@ -102,15 +102,16 @@ export function DownloadButton() {
   return useMemo(
     () => (
       <div
-        className={`fixed z-999 md:relative right-2 bottom-2 md:right-auto md:bottom-auto h-10 w-10 md:ml-6 md:mb-8 rounded-full shadow-sm shadow-gray-50 cursor-pointer flex items-center justify-center bg-slate-800/80 dark:bg-gray-100/80
+        className={`fixed z-999 md:relative right-2 bottom-2 md:right-auto md:bottom-auto h-10 w-10 md:ml-6 md:mb-8 rounded-full cursor-pointer flex items-center justify-center 
+           bg-transparent hover:bg-[#1890FF] group ease-out duration-300 transition-colors
            ${bounce ? "animate-bounce" : "-translate-y-1/4"}`}
         onClick={onDownload}
       >
-        {!isDownloading && (
-          <div className="absolute -z-10 top-0 left-0 w-full h-full rounded-full animate-ping bg-inherit"></div>
-        )}
+        {/*{!isDownloading && (*/}
+        {/*  <div className="absolute -z-10 top-0 left-0 w-full h-full rounded-full animate-ping bg-inherit"></div>*/}
+        {/*)}*/}
         <div
-          className="absolute top-0 left-0 w-full h-full rounded-full bg-conic from-slate-100 via-slate-100 to-transparent"
+          className="absolute top-0 left-0 w-full h-full rounded-full bg-conic from-[#1890FF] via-[#1890FF] group-hover:from-gray-50 group-hover:via-gray-50 to-transparent"
           style={
             {
               "--tw-gradient-to-position": `${progress}%`,
