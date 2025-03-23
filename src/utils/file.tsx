@@ -2,6 +2,7 @@ export const extractFileName = () => {
   const queryParameters = new URLSearchParams(window.location.search);
   let fileURL = queryParameters.get("file");
   fileURL = fileURL ? fileURL : "";
+  fileURL = decodeURIComponent(fileURL);
   const { isValid, extension } = validateFileName(fileURL);
   if (isValid) {
     const fileTitle = fileURL.split("/").pop();
