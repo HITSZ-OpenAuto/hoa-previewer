@@ -34,11 +34,15 @@ function App() {
     if (extension === "md") {
       fetch(fileURL).then(async (resp) => {
         if (resp.ok) {
-          setFile(await resp.text());
+          const text = await resp.text();
+          setFile(text);
         }
       });
     } else {
-      setFile(fileURL);
+      // Use requestAnimationFrame to avoid synchronous setState in effect
+      requestAnimationFrame(() => {
+        setFile(fileURL);
+      });
     }
   }, [extension, fileURL]);
 

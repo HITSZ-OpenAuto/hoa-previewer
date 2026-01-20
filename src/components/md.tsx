@@ -1,6 +1,11 @@
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { getCodeString } from "rehype-rewrite";
 import { useState, useEffect } from "react";
+import type { KatexOptions } from "katex";
+
+interface KatexInstance {
+  renderToString(tex: string, options?: KatexOptions): string;
+}
 
 interface MarkdownProps {
   source: string;
@@ -13,14 +18,14 @@ const hasMathExpression = (content: string): boolean => {
 
 export default function MarkdownComponent(props: MarkdownProps) {
   const [katexLoaded, setKatexLoaded] = useState(false);
-  const [katexInstance, setKatexInstance] = useState<any>(null);
+  const [katexInstance, setKatexInstance] = useState<KatexInstance | null>(null);
 
   // Only load KaTeX if math expressions are detected
   useEffect(() => {
     if (hasMathExpression(props.source) && !katexLoaded) {
       import("katex").then((katexModule) => {
         import("katex/dist/katex.css");
-        setKatexInstance(katexModule.default);
+        setKatexInstance(katexModule.default as unknown as KatexInstance);
         setKatexLoaded(true);
       });
     }
