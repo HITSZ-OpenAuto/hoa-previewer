@@ -15,7 +15,7 @@ const baseMath = createMathPlugin({
 })
 
 // Extend it with our custom macros for \scr and \cal
-const mathPlugin = baseMath.rehypePlugin as [any, any]
+const mathPlugin = baseMath.rehypePlugin as [unknown, unknown]
 const math = {
   ...baseMath,
   rehypePlugin: [
@@ -34,7 +34,7 @@ const math = {
 export default function MarkdownComponent(props: MarkdownProps) {
   return (
     <div className="h-full w-full overflow-auto p-4">
-      <Streamdown plugins={{ code, mermaid, math: math as any, cjk }}>
+      <Streamdown plugins={{ code, mermaid, math: math as unknown, cjk }}>
         {props.source}
       </Streamdown>
     </div>
