@@ -29,9 +29,6 @@ importers:
       katex:
         specifier: ^0.16.27
         version: 0.16.27
-      prettier:
-        specifier: ^3.8.0
-        version: 3.8.0
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -41,12 +38,6 @@ importers:
       react-pdf:
         specifier: ^10.3.0
         version: 10.3.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      rehype-katex:
-        specifier: ^7.0.1
-        version: 7.0.1
-      remark-math:
-        specifier: ^6.0.0
-        version: 6.0.0
       streamdown:
         specifier: ^2.1.0
         version: 2.1.0(react@19.2.3)
@@ -2723,11 +2714,6 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
-
-  prettier@3.8.0:
-    resolution: {integrity: sha512-yEPsovQfpxYfgWNhCfECjG5AQaO+K3dp6XERmOepyPDVqcJm+bjyCVO3pmU+nAPe0N5dDvekfGezt/EIiRe1TA==}
-    engines: {node: '>=14'}
-    hasBin: true
 
   property-information@7.1.0:
     resolution: {integrity: sha512-TwEZ+X+yCJmYfL7TPUOcvBZ4QfoT5YenQiJuX//0th53DE6w0xxLEtfK3iyryQFddXuvkIk51EEgrJQ0WJkOmQ==}
@@ -6063,8 +6049,6 @@ snapshots:
     optional: true
 
   prelude-ls@1.2.1: {}
-
-  prettier@3.8.0: {}
 
   property-information@7.1.0: {}
 

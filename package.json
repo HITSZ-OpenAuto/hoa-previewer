@@ -20,12 +20,9 @@
     "@streamdown/mermaid": "^1.0.1",
     "@tailwindcss/vite": "^4.1.18",
     "katex": "^0.16.27",
-    "prettier": "^3.8.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-pdf": "^10.3.0",
-    "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0",
     "streamdown": "^2.1.0",
     "tailwindcss": "^4.1.18"
   },
