@@ -123,6 +123,6 @@ export function DownloadButton() {
         {innerContent}
       </div>
     ),
-    [bounce, innerContent, isDownloading, onDownload, progress],
+    [bounce, innerContent, onDownload, progress],
   );
 }

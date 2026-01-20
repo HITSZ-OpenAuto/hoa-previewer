@@ -48,8 +48,10 @@ export default function PDFComponent(props: PDFProps) {
       observer.observe(ref);
     });
 
+    const currentObserverRefs = observerRefs.current;
+
     return () => {
-      observerRefs.current.forEach((ref) => {
+      currentObserverRefs.forEach((ref) => {
         observer.unobserve(ref);
       });
     };
