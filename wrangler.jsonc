@@ -1,5 +1,5 @@
 {
-	"name": "hoa-previewer",
-	"compatibility_date": "2025-06-05",
-	"assets": { "directory": "./dist" }
+  "name": "hoa-previewer",
+  "compatibility_date": "2025-06-05",
+  "assets": { "directory": "./dist" },
 }

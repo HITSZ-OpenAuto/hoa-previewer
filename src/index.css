@@ -13,9 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@source "../node_modules/streamdown/dist/*.js";
+@source '../node_modules/streamdown/dist/*.js';
 
 #proxy-renderer {
   height: 100vh;

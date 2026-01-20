@@ -1,81 +1,81 @@
-import { CSSProperties, useCallback, useMemo, useState } from "react";
-import { extractFileName } from "../utils/file.tsx";
+import { CSSProperties, useCallback, useMemo, useState } from 'react'
+import { extractFileName } from '../utils/file.tsx'
 
 function triggerDownload(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = fileName || "download"; // 设置下载文件名
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName || 'download' // 设置下载文件名
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 5000)
 }
 
 async function downloadFile(
   url: string,
   setProgress: (progress: number) => void,
 ) {
-  const response = await fetch(url);
+  const response = await fetch(url)
   if (!response.ok) {
-    throw new Error(`HTTP ERROR! CODE: ${response.status}`);
+    throw new Error(`HTTP ERROR! CODE: ${response.status}`)
   }
-  const contentLength = response.headers.get("Content-Length") || "";
-  const total = parseInt(contentLength);
-  let loaded = 0;
+  const contentLength = response.headers.get('Content-Length') || ''
+  const total = parseInt(contentLength)
+  let loaded = 0
 
-  const body = response.body;
+  const body = response.body
   if (!body) {
-    throw new Error(`HTTP ERROR! CODE: ${response.status}`);
+    throw new Error(`HTTP ERROR! CODE: ${response.status}`)
   }
-  const reader = response.body.getReader();
-  const chunks = [];
+  const reader = response.body.getReader()
+  const chunks = []
 
   while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    chunks.push(value);
-    loaded += value.length;
+    const { done, value } = await reader.read()
+    if (done) break
+    chunks.push(value)
+    loaded += value.length
 
-    setProgress(total ? (loaded / total) * 100 : 99);
+    setProgress(total ? (loaded / total) * 100 : 99)
   }
-  setProgress(100);
-  const blob = new Blob(chunks);
-  triggerDownload(blob, decodeURIComponent(url.split("/").pop() || "download"));
+  setProgress(100)
+  const blob = new Blob(chunks)
+  triggerDownload(blob, decodeURIComponent(url.split('/').pop() || 'download'))
 }
 
 export function DownloadButton() {
-  const [progress, setProgress] = useState<number>(0);
-  const [isDownloading, setIsDownloading] = useState<boolean>(false);
-  const [bounce, setBounce] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0)
+  const [isDownloading, setIsDownloading] = useState<boolean>(false)
+  const [bounce, setBounce] = useState<boolean>(false)
 
   const getFileName = useCallback(() => {
-    return extractFileName();
-  }, []);
+    return extractFileName()
+  }, [])
 
-  const { fileURL } = getFileName();
+  const { fileURL } = getFileName()
 
   const onDownload = useCallback(() => {
-    console.log("download");
-    setIsDownloading(true);
+    console.log('download')
+    setIsDownloading(true)
     downloadFile(fileURL, setProgress)
       .then(() => {
         setTimeout(() => {
-          setBounce(true);
+          setBounce(true)
           setTimeout(() => {
-            setBounce(false);
-            setIsDownloading(false);
-            setProgress(0);
-          }, 2000);
-        }, 500);
+            setBounce(false)
+            setIsDownloading(false)
+            setProgress(0)
+          }, 2000)
+        }, 500)
       })
-      .catch();
-  }, [fileURL]);
+      .catch()
+  }, [fileURL])
 
   const downloadIcon = useMemo(
     () => (
       <svg
-        className="w-7 h-7 fill-[#1890FF] group-hover:fill-gray-50"
+        className="h-7 w-7 fill-[#1890FF] group-hover:fill-gray-50"
         viewBox="0 0 1024 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ export function DownloadButton() {
       </svg>
     ),
     [],
-  );
+  )
 
   const innerContent = useMemo(
     () =>
@@ -97,26 +97,24 @@ export function DownloadButton() {
         downloadIcon
       ),
     [downloadIcon, isDownloading, progress],
-  );
+  )
 
   return useMemo(
     () => (
       <div
-        className={`fixed z-999 md:relative right-2 bottom-2 md:right-auto md:bottom-auto h-10 w-10 md:ml-6 md:mb-8 rounded-full cursor-pointer flex items-center justify-center 
-           bg-transparent hover:bg-[#1890FF] group ease-out duration-300 transition-colors
-           ${bounce ? "animate-bounce" : "-translate-y-1/4"}`}
+        className={`group fixed right-2 bottom-2 z-999 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-transparent transition-colors duration-300 ease-out hover:bg-[#1890FF] md:relative md:right-auto md:bottom-auto md:mb-8 md:ml-6 ${bounce ? 'animate-bounce' : '-translate-y-1/4'}`}
         onClick={onDownload}
       >
         {/*{!isDownloading && (*/}
         {/*  <div className="absolute -z-10 top-0 left-0 w-full h-full rounded-full animate-ping bg-inherit"></div>*/}
         {/*)}*/}
         <div
-          className="absolute top-0 left-0 w-full h-full rounded-full bg-conic from-[#1890FF] via-[#1890FF] group-hover:from-gray-50 group-hover:via-gray-50 to-transparent"
+          className="absolute top-0 left-0 h-full w-full rounded-full bg-conic from-[#1890FF] via-[#1890FF] to-transparent group-hover:from-gray-50 group-hover:via-gray-50"
           style={
             {
-              "--tw-gradient-to-position": `${progress}%`,
-              "--tw-gradient-via-position": `${progress}%`,
-              mask: "radial-gradient(circle at center, transparent 1.050rem, #000 1.051rem)",
+              '--tw-gradient-to-position': `${progress}%`,
+              '--tw-gradient-via-position': `${progress}%`,
+              mask: 'radial-gradient(circle at center, transparent 1.050rem, #000 1.051rem)',
             } as CSSProperties
           }
         ></div>
@@ -124,5 +122,5 @@ export function DownloadButton() {
       </div>
     ),
     [bounce, innerContent, onDownload, progress],
-  );
+  )
 }
