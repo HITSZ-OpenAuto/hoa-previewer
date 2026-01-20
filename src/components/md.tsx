@@ -34,7 +34,7 @@ const math: MathPlugin = {
 
 export default function MarkdownComponent(props: MarkdownProps) {
   return (
-    <div className="h-full w-full overflow-auto p-4">
+    <div className="h-full w-full overflow-auto p-4 wrap-break-word [&_pre]:whitespace-pre-wrap [&_pre]:overflow-x-auto [&_code]:break-all [&_.katex-display]:overflow-x-auto">
       <Streamdown plugins={{ code, mermaid, math, cjk }}>
         {props.source}
       </Streamdown>
