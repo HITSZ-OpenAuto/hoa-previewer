@@ -13,14 +13,19 @@
   },
   "dependencies": {
     "@cyntler/react-doc-viewer": "^1.17.1",
+    "@streamdown/cjk": "^1.0.1",
+    "@streamdown/code": "^1.0.1",
+    "@streamdown/math": "^1.0.1",
+    "@streamdown/mermaid": "^1.0.1",
     "@tailwindcss/vite": "^4.1.18",
-    "@uiw/react-markdown-preview": "^5.1.5",
     "katex": "^0.16.27",
     "prettier": "^3.8.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-pdf": "^10.3.0",
-    "rehype-rewrite": "^4.0.4",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "streamdown": "^2.1.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
