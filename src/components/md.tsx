@@ -51,7 +51,6 @@ export default function MarkdownComponent(props: MarkdownProps) {
 
   return (
     <MarkdownPreview
-      className="h-full"
       source={props.source}
       style={{ padding: 16 }}
       components={{
@@ -76,7 +75,7 @@ export default function MarkdownComponent(props: MarkdownProps) {
               : children;
 
           if (
-            katexLoaded &&
+            katexInstance &&
             typeof code === "string" &&
             typeof className === "string" &&
             /^language-katex/.test(className.toLocaleLowerCase())
