@@ -1,21 +1,21 @@
-import { Streamdown } from "streamdown";
-import { code } from '@streamdown/code';
-import { mermaid } from '@streamdown/mermaid';
-import { createMathPlugin } from '@streamdown/math';
-import { cjk } from '@streamdown/cjk';
-import "katex/dist/katex.min.css";
+import { Streamdown } from 'streamdown'
+import { code } from '@streamdown/code'
+import { mermaid } from '@streamdown/mermaid'
+import { createMathPlugin } from '@streamdown/math'
+import { cjk } from '@streamdown/cjk'
+import 'katex/dist/katex.min.css'
 
 interface MarkdownProps {
-  source: string;
+  source: string
 }
 
 // Create the base math plugin using the built-in creator
 const baseMath = createMathPlugin({
   singleDollarTextMath: true,
-});
+})
 
 // Extend it with our custom macros for \scr and \cal
-const mathPlugin = baseMath.rehypePlugin as [any, any];
+const mathPlugin = baseMath.rehypePlugin as [any, any]
 const math = {
   ...baseMath,
   rehypePlugin: [
@@ -23,20 +23,20 @@ const math = {
     {
       ...mathPlugin[1],
       macros: {
-        "\\scr": "\\mathscr",
-        "\\cal": "\\mathcal",
+        '\\scr': '\\mathscr',
+        '\\cal': '\\mathcal',
       },
       throwOnError: false,
     },
   ],
-};
+}
 
 export default function MarkdownComponent(props: MarkdownProps) {
   return (
-    <div className="p-4 overflow-auto h-full w-full">
+    <div className="h-full w-full overflow-auto p-4">
       <Streamdown plugins={{ code, mermaid, math: math as any, cjk }}>
         {props.source}
       </Streamdown>
     </div>
-  );
+  )
 }
