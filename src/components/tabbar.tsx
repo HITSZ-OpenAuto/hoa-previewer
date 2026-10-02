@@ -11,7 +11,7 @@ export default function Tabbar(props: tabbarProps) {
           className="text-md font-bold hover:opacity-75 dark:text-white"
           href="https://hoa.moe/"
         >
-          HITSZ 自动化课程攻略共享计划
+          HITSZ 课程攻略共享计划
         </a>
       </div>
       <div className="md:text-md text-right text-xs font-bold md:mr-16">
